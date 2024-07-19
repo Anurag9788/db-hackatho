@@ -1,10 +1,10 @@
 from flask import Flask,render_template,redirect,session,request,url_for,jsonify,session
-from flaskext.db import db
+from flaskext.mysql import MySQL
 # from flask_sqlalchemy import SQLAlchemy
-from pydb import NULL
 from flask_cors import CORS
 import Helpers.face_taker as ft
 import Helpers.face_recognizer as fr
+import os
 # from flask_migrate import Migrate
 app = Flask(__name__,static_folder='templates/static')
 CORS(app)
@@ -18,7 +18,7 @@ app.config['db_DATABASE_PASSWORD'] = 'password'
 app.config['db_DATABASE_DB'] = 'dementia'
 
 
-db=db(app)
+db=MySQL(app)
 db.init_app(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres_password@dbhackathon:57432/hackathon'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -156,6 +156,27 @@ def face_recognise():
     user = 'care_taker'
     fr.face_recognise(user)
     return render_template('home.html')
+
+# @app.route('/patientupload', methods=['GET', 'POST'])
+# def upload():
+#     if request.method == 'POST':
+#         first_name = request.form['full_name']
+#         last_name = request.form['last_name']
+#         date_of_birth = request.form['age']
+#         image = request.files['image']
+
+#         if image:
+#             image_path = os.path.join(app.config['UPLOAD_FOLDER'], image.filename)
+#             image.save(image_path)
+
+            
+#             db.session.add(new_patient)
+#             db.session.commit()
+
+#             return redirect(url_for('index'))
+
+#     return render_template('upload.html')
+
 
 if __name__ =="__main__":
     with app.app_context():

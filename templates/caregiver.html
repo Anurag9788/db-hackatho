@@ -39,6 +39,16 @@
     </script>
 
   <script src="{{ url_for('static', filename='assets/js/site.js')}}"></script>
+  <script>
+    function success() {
+      if(document.getElementById("firnma").value==="") { 
+               
+           } else { 
+               document.getElementById('mypic').href="/take_photo/"+document.getElementById("firnma").value; 
+           }
+       }
+  </script>
+
 
 </head>
 
@@ -153,28 +163,23 @@
             <div class="col-md-5 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
                   <label class="visually-hidden">Upload Pic</label>
-                  <input type="file" class="form-control form-livedoc-control" id="mypic" name="myprofiepic">
+                  <a  class="form-control form-livedoc-control" id="mypic" name="myprofiepic" >Take Photos </a>
                 </div>
             </div>
             <div class="col-md-7 border-right">
                 <div class="p-3 py-5">
                     <div class="row mt-2">
-                        <div class="col-md-6"><label class="visually-hidden">Name</label><input type="text" class="form-control form-livedoc-control" placeholder="first name" value=""></div>
-                        <div class="col-md-6"><label class="visually-hidden">Surname</label><input type="text" class="form-control form-livedoc-control" value="" placeholder="surname"></div>
+                        <div class="col-md-6"><label class="visually-hidden">FullName</label><input type="text" class="form-control form-livedoc-control" onkeyup="success()"   id="firnma" placeholder="full name" value=""></div>
+                        <div class="col-md-6"><label class="visually-hidden">Age</label><input type="text" class="form-control form-livedoc-control" value="" placeholder="Age"></div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12"><label class="visually-hidden">Mobile Number</label><input type="text" class="form-control form-livedoc-control" placeholder="enter phone number" value=""></div>
-                        <div class="col-md-12"><label class="visually-hidden">Address Line 1</label><input type="text" class="form-control form-livedoc-control" placeholder="enter address line 1" value=""></div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6"><label class="visually-hidden">Country</label><input type="text" class="form-control form-livedoc-control" placeholder="country" value=""></div>
-                        <div class="col-md-6"><label class="visually-hidden">State/Region</label><input type="text" class="form-control form-livedoc-control" value="" placeholder="state"></div>
                     </div>
                 </div>
                 
             </div>
             <div clas="row">
-              <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button"> Submit</button></div>
+              <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save </button></div>
 
             </div>
         </div>
