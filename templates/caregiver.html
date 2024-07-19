@@ -34,6 +34,9 @@
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_ub8A9brQFO_YR3J0HY6st_5Wgk_44cs&callback=initMap">
+    </script>
 
   <script src="{{ url_for('static', filename='assets/js/site.js')}}"></script>
 
@@ -52,22 +55,66 @@
   <div class="container rounded bg-white mt-5 mb-5  " >
     <div class="row">
       
-        <div class="col-md-4 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">XYZ</span><span> </span></div>
+        <div class="col-md-6 border-right">
+            <div class="d-flex flex-column align-items-center text-center "><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">XYZ</span><span> </span></div>
+            <div class="d-flex flex-column align-items-center text-center p-3 py-2"> <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d116862.54554679655!2d90.40409584970706!3d23.749000170125925!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1550040341458" width="100%" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
+              <span> </span></div>
+
         </div>
-        <div class="col-md-8 border-right">
+        <div class="col-md-6 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Patient info</h4>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-6"><label class="visually-hidden">Name</label><input type="text" class="form-control form-livedoc-control" placeholder="first name" value=""></div>
-                    <div class="col-md-6"><label class="visually-hidden">Surname</label><input type="text" class="form-control form-livedoc-control" value="" placeholder="surname"></div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12"><label class="visually-hidden">Mobile Number</label><input type="text" class="form-control form-livedoc-control" placeholder="enter phone number" value=""></div>
+
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Full Name</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    Kenneth Valdez
+                  </div>                    
 
                 </div>
+                <div class="row mt-2">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Gender</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    Male
+                  </div> 
+              </div>
+                <div class="row mt-2">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Age</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                   29
+                  </div> 
+              </div>
+              <div class="row mt-2">
+                <div class="col-sm-4">
+                  <h6 class="mb-0">Mobile Number</h6>
+                </div>
+                <div class="col-sm-8 text-secondary">
+                 8373802099
+                </div> 
+                <div class="row mt-2">
+                  <div class="col-sm-9">
+                    <h6 class="mb-0">Food-medicine</h6>
+                  </div>
+            </div>
+
+            <div class="row mt-2">
+              <div class="col-md-12">
+                <textarea class="form-control form-livedoc-control" id="validationTextarea" placeholder="Instruction" style="height: 250px;" required="required"></textarea>
+              </div> 
+        </div>
+
+            
+
+
+              
             </div>
         </div>
 
@@ -158,8 +205,7 @@
             class="navbar-toggler-icon"> </span></button>
         <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto pt-2 pt-lg-0 font-base">
-            <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="#about">Face</a></li>
-            <li class="nav-item px-2"><a class="nav-link" href="#departments">Food & Medicine</a></li>
+            <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/find_patient">Find Patient</a></li>
             <li class="nav-item px-2"><a class="nav-link" href="#findUs">SOS</a></li>
           </ul>
           <a class="btn  btn-outline-primary  rounded-pill order-1 order-lg-0 ms-lg-4" id="addPatient"
@@ -401,6 +447,7 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
   <script src="{{ url_for('static', filename='vendors/fontawesome/all.min.js')}}"></script>
   <script src="{{ url_for('static', filename='assets/js/theme.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

@@ -10,9 +10,9 @@ coordinates = []
 app.config['UPLOAD_FOLDER'] = 'templates/static/uploads'
 
 
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_HOST'] = 'dbhackathon'
+app.config['MYSQL_DATABASE_USER'] = 'hackathon'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
 app.config['MYSQL_DATABASE_DB'] = 'dementia'
 
 db=MySQL(app)
@@ -82,7 +82,7 @@ def login():
         email=request.form['email']
         password=request.form['password']
 
-        cur=mysql.connect().cursor()
+        cur=db.connect().cursor()
         cur.execute("select * from patients where email='"+email+"' ")
         user=cur.fetchone()
         
