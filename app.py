@@ -1,9 +1,11 @@
-from flask import Flask,render_template,redirect,session,request,url_for,jsonify
+from flask import Flask,render_template,redirect,session,request,url_for,jsonify,session
 from flaskext.mysql import MySQL
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 from pymysql import NULL
 from flask_cors import CORS
-from flask_migrate import Migrate
+import Helpers.face_taker as ft
+import Helpers.face_recognizer as fr
+# from flask_migrate import Migrate
 app = Flask(__name__,static_folder='templates/static')
 CORS(app)
 coordinates = []
@@ -20,8 +22,8 @@ db.init_app(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres_password@dbhackathon:57432/hackathon'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # db = SQLAlchemy(app)
-from models import * 
-migrate = Migrate(app, db)
+# from models import * 
+# migrate = Migrate(app, db)
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -55,6 +57,8 @@ def register():
         cur.close()
         # session['fname']=request.form['first_name']
         # session['email']=request.form['email']
+        session['email']=email
+        session['user_type']=user_type
         return redirect(url_for('login'))
 
 @app.route('/caretakerlogin',methods=["GET","POST"])
@@ -121,8 +125,21 @@ def send_coordinates():
 def get_coordinates():
     return jsonify({'coordinates': coordinates}),200
 
+@app.route('/take_photo/<name>',methods=['GET'])
+def take_photos(name):
+    # user = session['user_type']
+    user = 'care_taker'
+    ft.take_face(name,user)
+    return render_template('home.html')
+
+@app.route('/find_patient',methods=['GET','POST'])
+def face_recognise():
+    user = 'care_taker'
+    fr.face_recognise(user)
+    return render_template('home.html')
 
 if __name__ =="__main__":
     with app.app_context():
-        db.create_all()
+        # db.create_all()
+        pass
     app.run(debug=True,port=8080,use_reloader=False)
