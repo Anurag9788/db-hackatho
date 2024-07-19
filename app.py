@@ -61,6 +61,24 @@ def register():
         session['user_type']=user_type
         return redirect(url_for('login'))
 
+@app.route('/getPatientDetails', methods=['GET'])
+def getPatientDetails():
+        conn=mysql.connect()
+        cur=conn.cursor()
+        uname="trupti"
+        cur.execute("Select * from patients WHERE name = {uname}")
+        # cur.execute("INSERT INTO leaderboard(username) VALUES (%s)",(username))
+        myresult = cur.fetchall()
+
+        for x in myresult:
+            print(x)
+        conn.commit()
+        cur.close()
+    
+
+    
+
+
 @app.route('/caretakerlogin',methods=["GET","POST"])
 def caretakerlogin():
     if request.method=='POST':
