@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/stylesheet.css') }}">
+
+    <link href="{{ url_for('static', filename='assets/css/theme.css') }}" rel="stylesheet" />
+  
+    <script src="{{ url_for('static', filename='assets/js/jquery.js')}}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/site.css') }}">
     <script src="{{ url_for('static', filename='assets/js/site.js')}}"></script>
     <script src="{{ url_for('static', filename='assets/js/jquery.js')}}"></script>
@@ -248,33 +252,31 @@ https://kantime.com/kantime-experience-2024/</a></p>
                 <div class="col-lg-5 col-md-6 col-sm-12 right_sec d-flex justify-content-center align-items-center flex-column">
                     <div class="login_form_outer">
                         <div class="login_form">
-                            <img class="KanTimeLogo mb-4 mt-5px" alt="Dementia" src="/identity/v2/accounts/images/KanTime-HealthcareSoftware_logo.svg">
+                            <img class="KanTimeLogo mb-4 mt-5px" src="static/assets/images/logo.png" width="118" alt="logo" />
                             <table class="login_table">
                                 <tbody>
-                                    <!-- <tr>
+                                    <tr>
                                         <td>
                                             <img src="/identity/v2/accounts/images/user_lg.svg" alt="" class="text_ico">
                                         </td>
                                         <td>
-                                            <div>
-                                                <input id="login_type" type="radio" class="login_type" placeholder="Login Type" oninput="ResetErrors()" tabindex="1" data-val="true" data-val-required="The LoginType field is required." name="LoginType" value="">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h4 class="text-right">Login as</h4>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input id="login_type" type="radio" class="login_type" placeholder="Login Type" oninput="ResetErrors()" tabindex="1" data-val="true" data-val-required="The LoginType field is required." name="LoginType" value="">
-                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="CaregiverLogin" id="flexRadioDefault1" value="patient">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                 Patient
+                                                </label>
+                                              </div>
+                                              <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="CaregiverLogin" id="flexRadioDefault2" value="caregiver" checked>
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                  Caregiver
+                                                </label>
+                                              </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td colspan="2" class="h-20px">
-                                            <label id="lbl_errortype" class="incorrect_cred" style="display: none;"></label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="h-10px">
-                                        </td>
-                                    </tr> -->
                                     <tr>
                                     <td>
                                         <img src="/identity/v2/accounts/images/user_lg.svg" alt="" class="text_ico">
