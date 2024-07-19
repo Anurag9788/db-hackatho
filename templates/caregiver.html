@@ -166,7 +166,8 @@
                   <a  class="form-control form-livedoc-control" id="mypic" name="myprofiepic" >Take Photos </a>
                 </div>
             </div>
-            <div class="col-md-7 border-right">
+            <!-- <form method="post"> -->
+            <form method="post" class="col-md-7 border-right" action="/registerpatient">
                 <div class="p-3 py-5">
                     <div class="row mt-2">
                         <div class="col-md-6"><label class="visually-hidden">FullName</label><input type="text" class="form-control form-livedoc-control" onkeyup="success()"   id="firnma" placeholder="full name" value=""></div>
@@ -174,6 +175,10 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12"><label class="visually-hidden">Mobile Number</label><input type="text" class="form-control form-livedoc-control" placeholder="enter phone number" value=""></div>
+                    </div>
+                    <div clas="row">
+                      <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button"> Submit</button></div>
+        
                     </div>
                 </div>
                 
@@ -260,7 +265,7 @@
             </div>
           </div>
         </div>
-        <!-- end of .container-->
+        <!-- end of .container-->s
 
       </section>
       <!-- <section> close ============================-->
@@ -278,45 +283,22 @@
                 <div class="carousel-inner">
                   <div class="carousel-item active" data-bs-interval="10000">
                     <div class="row h-100 m-lg-7 mx-3 mt-6 mx-md-4 my-md-7">
+                      {% for patient in patients %}
                       <div class="col-md-4 mb-8 mb-md-0">
+
                         <div class="card card-span h-100 shadow">
                           <div class="card-body d-flex flex-column flex-center py-5"><img src="assets/img/gallery/anita.png" width="128" alt="..." />
-                            <h5 class="mt-3">Anita Deshai</h5>
-                            <p class="mb-0 fs-xxl-1">Pediatrics, Gochi Medicine</p>
-                            <p class="text-600 mb-0">Florida, United States</p>
-                            <p class="text-600 mb-4">10 years experience</p>
+                            <h5 class="mt-3">{{patient[0]}}</h5>
+                            <p class="mb-0 fs-xxl-1">{{patient[1]}}</p>
+                            <p class="text-600 mb-0">{{patient[2]}}</p>
                             <div class="text-center">
                               <button class="btn btn-outline-secondary rounded-pill" type="submit">View Profile</button>
                             </div>
                           </div>
                         </div>
+
                       </div>
-                      <div class="col-md-4 mb-8 mb-md-0">
-                        <div class="card card-span h-100 shadow">
-                          <div class="card-body d-flex flex-column flex-center py-5"><img src="assets/img/gallery/jane.png" width="128" alt="..." />
-                            <h5 class="mt-3">Jane Flakis</h5>
-                            <p class="mb-0 fs-xxl-1">Gynaecology, Abenka Care</p>
-                            <p class="text-600 mb-0">Melbourne, Australia</p>
-                            <p class="text-600 mb-4">12 years experience</p>
-                            <div class="text-center">
-                              <button class="btn btn-outline-secondary rounded-pill" type="submit">View Profile</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4 mb-8 mb-md-0">
-                        <div class="card card-span h-100 shadow">
-                          <div class="card-body d-flex flex-column flex-center py-5"><img src="assets/img/gallery/leo-mario.png" width="128" alt="..." />
-                            <h5 class="mt-3">Leo Mario</h5>
-                            <p class="mb-0 fs-xxl-1">Physiotherapy, FitCare</p>
-                            <p class="text-600 mb-0">London, England</p>
-                            <p class="text-600 mb-4">25 years experience</p>
-                            <div class="text-center">
-                              <button class="btn btn-secondary hover-top rounded-pill border-0" type="submit">View Profile</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      {% endfor %}
                     </div>
                   </div>
                   <div class="carousel-item" data-bs-interval="2000">

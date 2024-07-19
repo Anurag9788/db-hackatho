@@ -12,10 +12,10 @@ coordinates = []
 app.config['UPLOAD_FOLDER'] = 'templates/static/uploads'
 
 
-app.config['db_DATABASE_HOST'] = 'dbhackathon'
-app.config['db_DATABASE_USER'] = 'hackathon'
-app.config['db_DATABASE_PASSWORD'] = 'password'
-app.config['db_DATABASE_DB'] = 'dementia'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'trupti@1198'
+app.config['MYSQL_DATABASE_DB'] = 'dementia'
 
 
 db=MySQL(app)
@@ -31,9 +31,24 @@ def home():
 
 @app.route('/caregiver')
 def caretakerview():
-    return render_template('caregiver.html')
+    conn=db.connect()
+    cur=conn.cursor()
+    query_string = "SELECT * FROM patients"
+    cur.execute(query_string)
+    # cur.execute("INSERT INTO leaderboard(username) VALUES (%s)",(username))
+    patients = cur.fetchall()
 
-@app.route('/register',methods=["GET","POST"])
+    query_string = "SELECT count(*) FROM patients"
+    cur.execute(query_string)
+    patients_count = cur.fetchall()
+    for x in patients:
+        print(x)
+    conn.commit()
+    cur.close()
+    
+    return render_template('caregiver.html',patients=patients,patients_count=patients_count)
+
+@app.route('/registerpatient',methods=["GET","POST"])
 def register():
     if request.method=='GET':
         return render_template("login.html")
@@ -42,8 +57,8 @@ def register():
         # lname=request.form['last_name']
         email=request.form['email']
         # password=request.form['password']
-        gender=request.form['gender']
-        dob=request.form['birthday']
+        # gender=request.form['gender']
+        # dob=request.form['birthday']
         username=request.form['username']
         contact=request.form['phone']
 
@@ -67,7 +82,8 @@ def getPatientDetails():
         conn=db.connect()
         cur=conn.cursor()
         uname="trupti"
-        cur.execute(f"Select * from patients WHERE name = {uname}")
+        query_string = "SELECT * FROM patients WHERE  name= %s"
+        cur.execute(query_string, (uname,))
         # cur.execute("INSERT INTO leaderboard(username) VALUES (%s)",(username))
         myresult = cur.fetchall()
 
