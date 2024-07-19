@@ -1,0 +1,52 @@
+name: Example - Deploy a Gen1 Cloud Function using the deploy-cloud-functions GitHub Action
+on:
+  workflow_dispatch:
+
+jobs:
+  example:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      # actions/checkout MUST come before auth
+      - name: 'Checkout'
+        uses: 'actions/checkout@v3'
+        with:
+          repository: GoogleCloudPlatform/python-docs-samples # Taken from https://cloud.google.com/functions/docs/create-deploy-gcloud#functions-prepare-environment-python
+
+      - name: 'Authenticate to GCP as Infrastructure SA for deployment'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          export_environment_variables: true
+          project_id : ${{ vars.PROJECT_ID }}
+          workload_identity_provider: ${{ vars.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.INFRA_SA_EMAIL }} # Use your Infrastructure SA to manage resources
+
+      - name: 'Deploy Gen1 Cloud Function'
+        id: 'deploy'
+        uses: 'google-github-actions/deploy-cloud-functions@v1'
+        with:
+          entry_point: hello_get
+          name: 'my-first-function'
+          region: 'europe-west3'
+          runtime: 'python311'
+          service_account_email: '${{ vars.WORKLOAD_SA_EMAIL }}' # Use your Workload SA to attach to compute resources
+          source_dir: 'functions/helloworld'
+
+      # Only needed to get an ID token to simulate an authenticated curl call.
+      # Not needed for deployment.
+      - name: 'Authenticate to GCP as workload SA for invocation'
+        id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          token_format: 'id_token' # <--
+          workload_identity_provider: ${{ vars.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.WORKLOAD_SA_EMAIL }} # Use your Workload SA to interact with resources
+          id_token_audience: ${{ steps.deploy.outputs.url }}
+          id_token_include_email: true
+
+      - name: 'Poke Cloud Run'
+        run: 'curl -H "Authorization: Bearer ${{ steps.auth.outputs.id_token }}" "${{ steps.deploy.outputs.url }}"'
