@@ -8,9 +8,18 @@ app = Flask(__name__,static_folder='templates/static')
 CORS(app)
 coordinates = []
 app.config['UPLOAD_FOLDER'] = 'templates/static/uploads'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres_password@dbhackathon:57432/hackathon'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+
+
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_DB'] = 'dementia'
+
+db=MySQL(app)
+db.init_app(app)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres_password@dbhackathon:57432/hackathon'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# db = SQLAlchemy(app)
 from models import * 
 migrate = Migrate(app, db)
 @app.route('/')
