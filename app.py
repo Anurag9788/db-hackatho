@@ -1,7 +1,7 @@
 from flask import Flask,render_template,redirect,session,request,url_for,jsonify,session
-from flaskext.mysql import MySQL
+from flaskext.db import db
 # from flask_sqlalchemy import SQLAlchemy
-from pymysql import NULL
+from pydb import NULL
 from flask_cors import CORS
 import Helpers.face_taker as ft
 import Helpers.face_recognizer as fr
@@ -12,12 +12,13 @@ coordinates = []
 app.config['UPLOAD_FOLDER'] = 'templates/static/uploads'
 
 
-app.config['MYSQL_DATABASE_HOST'] = 'dbhackathon'
-app.config['MYSQL_DATABASE_USER'] = 'hackathon'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
-app.config['MYSQL_DATABASE_DB'] = 'dementia'
+app.config['db_DATABASE_HOST'] = 'dbhackathon'
+app.config['db_DATABASE_USER'] = 'hackathon'
+app.config['db_DATABASE_PASSWORD'] = 'password'
+app.config['db_DATABASE_DB'] = 'dementia'
 
-db=MySQL(app)
+
+db=db(app)
 db.init_app(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres_password@dbhackathon:57432/hackathon'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -47,7 +48,7 @@ def register():
         contact=request.form['phone']
 
 
-        conn=mysql.connect()
+        conn=db.connect()
         cur=conn.cursor()
         
         cur.execute("INSERT INTO patients VALUES (%s,%s,%s,%s,%s)",(email, username, gender, contact, dob))
@@ -63,10 +64,10 @@ def register():
 
 @app.route('/getPatientDetails', methods=['GET'])
 def getPatientDetails():
-        conn=mysql.connect()
+        conn=db.connect()
         cur=conn.cursor()
         uname="trupti"
-        cur.execute("Select * from patients WHERE name = {uname}")
+        cur.execute(f"Select * from patients WHERE name = {uname}")
         # cur.execute("INSERT INTO leaderboard(username) VALUES (%s)",(username))
         myresult = cur.fetchall()
 
