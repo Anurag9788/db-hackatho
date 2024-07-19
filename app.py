@@ -48,6 +48,26 @@ def caretakerview():
     
     return render_template('caregiver.html',patients=patients,patients_count=patients_count)
 
+
+@app.route('/patient')
+def patientview():
+    conn=db.connect()
+    cur=conn.cursor()
+    query_string = "SELECT * FROM patients"
+    cur.execute(query_string)
+    # cur.execute("INSERT INTO leaderboard(username) VALUES (%s)",(username))
+    patients = cur.fetchall()
+
+    query_string = "SELECT count(*) FROM patients"
+    cur.execute(query_string)
+    patients_count = cur.fetchall()
+    for x in patients:
+        print(x)
+    conn.commit()
+    cur.close()
+    
+    return render_template('patient.html',patients=patients,patients_count=patients_count)
+
 @app.route('/registerpatient',methods=["GET","POST"])
 def register():
     if request.method=='GET':
@@ -74,7 +94,7 @@ def register():
         # session['fname']=request.form['first_name']
         # session['email']=request.form['email']
         session['email']=email
-        session['user_type']=user_type
+        session['user_type']="caregiver"
         return redirect(url_for('login'))
 
 @app.route('/getPatientDetails', methods=['GET'])
@@ -118,26 +138,24 @@ def caretakerportal():
 @app.route('/login',methods=["GET","POST"])
 def login():
     if request.method=='POST':
-        email=request.form['email']
-        password=request.form['password']
+        email=request.form['LoginId']
+        password=request.form['Password']
 
         cur=db.connect().cursor()
-        cur.execute("select * from patients where email='"+email+"' ")
+        cur.execute(f"select * from patients where mail='{email}' ")
         user=cur.fetchone()
         
         cur.close()
         # print("hey")
         #if user > 0:
-        if password == user[3]:
-            print("hello")
-            session['name']=user[0]
-            session['lname']=user[1]
-            session['email']=user[2]
-            session['username']=user[6]
-            session['user_marks']=0
-            session['i']=1
+        if password:
+            print(request.form)
+            if "CaregiverLogin" in request.form and request.form['CaregiverLogin']=='caregiver':
 
-            return render_template("home.html")
+
+                return render_template("caregiver.html")
+            else:
+                return  render_template("patient.html")
 
         else:
             return "Please enter Correct password again"
